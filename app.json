@@ -24,7 +24,7 @@
       "value": "1"
     },
     "LEAGUE_ID": {
-      "description": "ESPN League ID",
+      "description": "ESPN League ID. Can be a comma delimited ID for multiple leagues.",
       "value": "1"
     },
     "LEAGUE_YEAR": {

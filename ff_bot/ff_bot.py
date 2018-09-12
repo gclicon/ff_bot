@@ -125,7 +125,7 @@ def get_scoreboard_short(league, final=False):
     score = ['%s %.2f - %.2f %s' % (i.home_team.owner, i.home_score,
              i.away_score, i.away_team.owner) for i in matchups
              if i.away_team]
-    text = ['Score Update'] + score
+    text = ['%s' % league.settings.name] + ['Score Update'] + score
     return '\n'.join(text)
 
 def get_scoreboard(league):
@@ -134,7 +134,7 @@ def get_scoreboard(league):
     score = ['%s %.2f - %.2f %s' % (i.home_team.owner, i.home_score,
              i.away_score, i.away_team.owner) for i in matchups
              if i.away_team]
-    text = ['Score Update'] + score
+    text = ['%s' % league.settings.name] + ['Score Update'] + score
     return '\n'.join(text)
 
 def get_matchups(league):
@@ -144,7 +144,7 @@ def get_matchups(league):
     score = ['%s(%s-%s) vs %s(%s-%s)' % (i.home_team.owner, i.home_team.wins, i.home_team.losses,
              i.away_team.owner, i.away_team.wins, i.away_team.losses) for i in matchups
              if i.away_team]
-    text = ['This Week\'s Matchups'] + score + ['\n'] + random_phrase()
+    text = ['%s' % league.settings.name] + ['This Week\'s Matchups'] + score + ['\n'] + random_phrase()
     return '\n'.join(text)
 
 def get_close_scores(league):
@@ -160,7 +160,7 @@ def get_close_scores(league):
                         i.away_score, i.away_team.owner)]
     if not score:
         score = ['None']
-    text = ['Close Scores'] + score
+    text = ['%s' % league.settings.name] + ['Close Scores'] + score
     return '\n'.join(text)
 
 def get_power_rankings(league):
@@ -171,7 +171,7 @@ def get_power_rankings(league):
 
     score = ['%s - %s' % (i[0], i[1].owner) for i in pranks
              if i]
-    text = ['This Week\'s Power Rankings'] + score
+    text = ['%s' % league.settings.name] + ['This Week\'s Power Rankings'] + score
     return '\n'.join(text)
 
 def get_trophies(league):
@@ -223,7 +223,7 @@ def get_trophies(league):
     close_score_str = ['%s barely beat %s by a margin of %.2f' % (close_winner, close_loser, closest_score)]
     blowout_str = ['%s blown out by %s by a margin of %.2f' % (blown_out_team_name, ownerer_team_name, biggest_blowout)]
 
-    text = ['Trophies of the week:'] + low_score_str + high_score_str + close_score_str + blowout_str
+    text = ['%s' % league.settings.name] + ['Trophies of the week:'] + low_score_str + high_score_str + close_score_str + blowout_str
     return '\n'.join(text)
 
 def bot_main(function):

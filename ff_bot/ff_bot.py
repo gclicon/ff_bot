@@ -242,7 +242,9 @@ def bot_main(function):
     except KeyError:
         discord_webhook_url = 1
 
-    league_id = os.environ["LEAGUE_ID"]
+    league_ids = os.environ["LEAGUE_ID"]
+    league_ids = league_ids.split(",")
+
 
     try:
         year = os.environ["LEAGUE_YEAR"]
@@ -252,61 +254,73 @@ def bot_main(function):
     bot = GroupMeBot(bot_id)
     slack_bot = SlackBot(slack_webhook_url)
     discord_bot = DiscordBot(discord_webhook_url)
-    league = League(league_id, year)
+
+    leagues = []
+
+    for league_id in league_ids:
+        leagues.append(League(league_id, year))
 
     test = False
     if test:
-        print(get_matchups(league))
-        print(get_scoreboard(league))
-        print(get_scoreboard_short(league))
-        print(get_close_scores(league))
-        print(get_power_rankings(league))
-        print(get_trophies(league))
-        function="get_final"
-        #bot.send_message(get_trophies(league))
-        bot.send_message("test complete")
-        slack_bot.send_message("test complete")
-        discord_bot.send_message("test complete")
+        for league in leagues:
+            print(get_matchups(league))
+            print(get_scoreboard(league))
+            print(get_scoreboard_short(league))
+            print(get_close_scores(league))
+            print(get_power_rankings(league))
+            print(get_trophies(league))
+            function="get_final"
+            #bot.send_message(get_trophies(league))
+            bot.send_message("test complete")
+            slack_bot.send_message("test complete")
+            discord_bot.send_message("test complete")
 
     if function=="get_matchups":
-        text = get_matchups(league)
-        bot.send_message(text)
-        slack_bot.send_message(text)
-        discord_bot.send_message(text)
-    elif function=="get_scoreboard":
-        text = get_scoreboard(league)
-        bot.send_message(text)
-        slack_bot.send_message(text)
-        discord_bot.send_message(text)
-    elif function=="get_scoreboard_short":
-        text = get_scoreboard_short(league)
-        bot.send_message(text)
-        slack_bot.send_message(text)
-        discord_bot.send_message(text)
-    elif function=="get_close_scores":
-        text = get_close_scores(league)
-        bot.send_message(text)
-        slack_bot.send_message(text)
-        discord_bot.send_message(text)
-    elif function=="get_power_rankings":
-        text = get_power_rankings(league)
-        bot.send_message(text)
-        slack_bot.send_message(text)
-        discord_bot.send_message(text)
-    elif function=="get_trophies":
-        text = get_trophies(league)
-        bot.send_message(text)
-        slack_bot.send_message(text)
-        discord_bot.send_message(text)
-    elif function=="get_final":
-        text = "Final " + get_scoreboard_short(league, True)
-        text = text + "\n\n" + get_trophies(league)
-        if test:
-            print(text)
-        else:
+        for league in leagues:
+            text = get_matchups(league)
             bot.send_message(text)
             slack_bot.send_message(text)
             discord_bot.send_message(text)
+    elif function=="get_scoreboard":
+        for league in leagues:
+            text = get_scoreboard(league)
+            bot.send_message(text)
+            slack_bot.send_message(text)
+            discord_bot.send_message(text)
+    elif function=="get_scoreboard_short":
+        for league in leagues:
+            text = get_scoreboard_short(league)
+            bot.send_message(text)
+            slack_bot.send_message(text)
+            discord_bot.send_message(text)
+    elif function=="get_close_scores":
+        for league in leagues:
+            text = get_close_scores(league)
+            bot.send_message(text)
+            slack_bot.send_message(text)
+            discord_bot.send_message(text)
+    elif function=="get_power_rankings":
+        for league in leagues:
+            text = get_power_rankings(league)
+            bot.send_message(text)
+            slack_bot.send_message(text)
+            discord_bot.send_message(text)
+    elif function=="get_trophies":
+        for league in leagues:
+            text = get_trophies(league)
+            bot.send_message(text)
+            slack_bot.send_message(text)
+            discord_bot.send_message(text)
+    elif function=="get_final":
+        for league in leagues:
+            text = "Final " + get_scoreboard_short(league, True)
+            text = text + "\n\n" + get_trophies(league)
+            if test:
+                print(text)
+            else:
+                bot.send_message(text)
+                slack_bot.send_message(text)
+                discord_bot.send_message(text)
     elif function=="init":
         try:
             text = os.environ["INIT_MSG"]
